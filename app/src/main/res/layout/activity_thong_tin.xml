@@ -6,9 +6,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarthongtin"
-        app:title="Thông tin"
-        android:background="#3F51B5"
-        app:titleTextColor="@color/black"
+        app:title="Thông tin về chúng tôi"
+        android:background="@color/black"
+        app:titleTextColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
@@ -19,14 +19,7 @@
         android:background="@drawable/hinhnennha"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:textColor="@color/white"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="Thông tin về chúng tôi"
-            android:textSize="30sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:background="@drawable/boder"
             android:layout_gravity="center"

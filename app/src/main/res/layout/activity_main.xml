@@ -17,7 +17,8 @@
              <androidx.appcompat.widget.Toolbar
                  android:id="@+id/toolbarmanhinhchinh"
                  app:title="Trang Chinh"
-                 android:background="#0A7AB3"
+                 app:titleTextColor="@color/white"
+                 android:background="@color/black"
                  android:layout_width="match_parent"
                  android:layout_height="?attr/actionBarSize">
 
@@ -34,12 +35,14 @@
                  android:layout_width="match_parent"
                  android:layout_height="match_parent">
                  <TextView
+                     android:gravity="center"
                      android:textSize="20sp"
                      android:textStyle="bold"
-                     android:textColor="#FF003B"
+                     android:textColor="@color/black"
                      android:layout_margin="5dp"
+                     android:textAllCaps="true"
                      android:text="Sản phẩm mới nhất"
-                     android:layout_width="wrap_content"
+                     android:layout_width="match_parent"
                      android:layout_height="wrap_content"/>
                  <androidx.recyclerview.widget.RecyclerView
                      android:id="@+id/recycleview"
