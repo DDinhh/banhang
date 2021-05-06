@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@drawable/bong"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".activity.DangkiActivity">
+    <TextView
+        android:id="@+id/textviewtitle"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:textColor="#E91E63"
+        android:textSize="40sp"
+        android:text="Đăng kí tài khoản"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageviewdangki"
+            android:scaleType="fitXY"
+            android:src="@drawable/dienaa"
+
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/nguoia"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <EditText
+            android:id="@+id/edittextdangkitaikhoan"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#E91E63"
+            android:hint="Nhập tài khoản"
+            android:backgroundTint="#E91E63"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/khoa"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+        <EditText
+            android:id="@+id/edittextdangkimatkhau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#E91E63"
+            android:hint="Nhập mật khẩu"
+            android:inputType="number|numberPassword"
+            android:textColor="#E91E63"
+            android:textSize="20sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/buttonxacnhan"
+            android:textSize="20sp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:padding="10dp"
+            android:backgroundTint="#E91E63"
+            android:text="Xác nhận"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/buttonhuy"
+            android:textSize="20sp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:padding="10dp"
+            android:backgroundTint="#0A0317"
+            android:text="hủy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

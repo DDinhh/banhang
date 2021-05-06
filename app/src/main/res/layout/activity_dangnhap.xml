@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@drawable/hinha"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".activity.DangnhapActivity">
+    <TextView
+        android:id="@+id/textviewtitle"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:textColor="#E91E63"
+        android:textSize="40sp"
+        android:text="Đăng nhập hệ thống"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/nguoia"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+        <EditText
+            android:id="@+id/edittexttaikhoan"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#E91E63"
+            android:hint="Nhập tài khoản"
+            android:backgroundTint="#E91E63"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/khoa"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+        <EditText
+            android:id="@+id/edittextmatkhau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:backgroundTint="#E91E63"
+            android:hint="Nhập mật khẩu"
+            android:inputType="number|numberPassword"
+            android:textColor="#E91E63"
+            android:textSize="20sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/buttondangnhap"
+            android:textSize="20sp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:padding="10dp"
+            android:backgroundTint="#E91E63"
+            android:text="Đăng nhập"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/buttondangki"
+            android:textSize="20sp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:padding="10dp"
+            android:backgroundTint="#673AB7"
+            android:text="Đăng kí"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>
