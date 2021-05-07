@@ -8,11 +8,13 @@
     tools:context=".activity.DienThoaiActivity">
     <androidx.appcompat.widget.Toolbar
         app:title="Điện Thoại"
-        android:background="#4A4442"
-        app:titleTextColor="#f9f6f5"
+        android:background="@color/black"
+        app:titleTextColor="@color/white"
         android:id="@+id/toolbardienthoai"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/Theme.AppCompat.Light">
 
     </androidx.appcompat.widget.Toolbar>
     <ListView

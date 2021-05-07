@@ -8,6 +8,9 @@ public class Server {
     public static String Duongdandonhang = "http://" + localhost + "/thongtinkhachhang.php";
     public static String Duongdanchitietdonhang = "http://" + localhost + "/chitietdonhang.php";
     public static String Duongdandonhangmoi = "http://" + localhost + "/thongtinkhachhangmoi.php";
+
+
+    public static String Duongdanquangcao="http://"+localhost+"/getquangcao.php";
     //public static String localhost = "4ce32788116d.ngrok.io";
    // public static String Duongdanloaisp = "http://" + localhost + "/server/getloaisp.php";
     //public static String Duongdansanphammoinhat = "http://" + localhost + "/server/getsanphammoinhat.php";

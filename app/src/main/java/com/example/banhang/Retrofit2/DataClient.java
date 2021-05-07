@@ -25,6 +25,6 @@ public interface DataClient {
 
     @FormUrlEncoded
     @POST("login.php")
-    Call<List<Sinhvien>> logindata(@Field("taikhoan") String taikhoan,
-                                   @Field("matkhau") String matkhau);
+    Call<List<Sinhvien>> logindata(@Field("tk") String tk,
+                                   @Field("mk") String mk);
 }

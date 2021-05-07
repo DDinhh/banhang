@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.banhang.R;
 import com.example.banhang.model.Giohang;
 import com.example.banhang.model.Sanpham;
@@ -110,9 +111,18 @@ public class ChiTietSanPham extends AppCompatActivity {
         Idsanpham = sanpham.getIDSanpham();
         txtten.setText(TenChitiet);
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        txtgia.setText("Giá :" + decimalFormat.format(GiaChitiet)+ "Đ");
+        txtgia.setText("" + decimalFormat.format(GiaChitiet)+ " đ");
         txtmota.setText(MotaChitiet);
-        Picasso.with(getApplicationContext()).load(HinhanhChitiet).placeholder(R.drawable.cho).error(R.drawable.loi).into(imgChitiet);
+
+        Glide.with(getApplicationContext()).load(HinhanhChitiet)
+                .placeholder(R.drawable.cho)
+                .into(imgChitiet);
+
+//        Picasso.with(getApplicationContext())
+//                .load(HinhanhChitiet)
+//                .placeholder(R.drawable.cho)
+//                .error(R.drawable.loi)
+//                .into(imgChitiet);
     }
 
     private void ActionToolbar() {

@@ -8,11 +8,13 @@
     tools:context=".activity.LapTopActivity">
     <androidx.appcompat.widget.Toolbar
         app:title="Laptop"
-        android:background="#4C4644"
-        app:titleTextColor="#f9f6f5"
+        android:background="@color/black"
+        app:titleTextColor="@color/white"
         android:id="@+id/toolbarlaptop"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/Theme.AppCompat.Light">
 
     </androidx.appcompat.widget.Toolbar>
     <ListView

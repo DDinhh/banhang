@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.banhang.R;
 import com.example.banhang.activity.ChiTietSanPham;
 import com.example.banhang.model.Sanpham;
@@ -44,8 +45,11 @@ public class SanphamAdapter extends RecyclerView.Adapter<SanphamAdapter.ItemHold
         Sanpham sanpham = arraysanpham.get(position);
         holder.txttensanpham.setText(sanpham.getTensanpham());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        holder.txtgiasanpham.setText("Giá :" + decimalFormat.format(sanpham.getGiasanpham()) + "Đ");
-        Picasso.with(context).load(sanpham.getHinhanhsanpham()).placeholder(R.drawable.cho).error(R.drawable.loi).into(holder.imghinhsanpham);
+        holder.txtgiasanpham.setText(decimalFormat.format(sanpham.getGiasanpham()) + " đ");
+        Glide.with(context).load(sanpham.getHinhanhsanpham())
+                .placeholder(R.drawable.cho)
+                .into(holder.imghinhsanpham);
+      //  Picasso.with(context).load(sanpham.getHinhanhsanpham()).placeholder(R.drawable.cho).error(R.drawable.loi).into(holder.imghinhsanpham);
     }
 
     @Override

@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.SearchManager;
 import android.app.VoiceInteractor;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,11 +16,16 @@ import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 //import android.widget.Toolbar;
 
@@ -61,29 +68,51 @@ public class DienThoaiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dien_thoai);
         AnhXa();
-        if(CheckConnection.haveNetworkConnection(getApplicationContext())){
+        if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
             GetIdloaisp();
             ActionToolbar();
             GetData(page);
             LoadmoreData();
-        }else {
-            CheckConnection.ShowToast_Short(getApplicationContext(),"Bạn hãy kiểm tra lại internet");
+        } else {
+            CheckConnection.ShowToast_Short(getApplicationContext(), "Bạn hãy kiểm tra lại internet");
             finish();
         }
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.menutimkiem);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                dienThoaiAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menugiohang:
-                Intent intent = new Intent(getApplicationContext(),GiohangActivity.class);
+                Intent intent = new Intent(getApplicationContext(), GiohangActivity.class);
                 startActivity(intent);
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -92,8 +121,8 @@ public class DienThoaiActivity extends AppCompatActivity {
         lvdt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(),ChiTietSanPham.class);
-                intent.putExtra("thongtinsanpham",mangdt.get(position));
+                Intent intent = new Intent(getApplicationContext(), ChiTietSanPham.class);
+                intent.putExtra("thongtinsanpham", mangdt.get(position));
                 startActivity(intent);
             }
         });
@@ -105,7 +134,7 @@ public class DienThoaiActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount!=0 && isLoading == false&& limitData == false){
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount != 0 && isLoading == false && limitData == false) {
                     isLoading = true;
                     ThreadData threadData = new ThreadData();
                     threadData.start();
@@ -116,52 +145,52 @@ public class DienThoaiActivity extends AppCompatActivity {
 
     private void GetData(int Page) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        String duongdan = Server.Duongdandienthoai+String.valueOf(Page);
+        String duongdan = Server.Duongdandienthoai + String.valueOf(Page);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-             int id = 0;
-             String Tendt = "";
-             int Giadt = 0;
-             String Hinhanhdt = "";
-             String Motadt = "";
-             int Iddpdt = 0;
-             if(response != null && response.length() != 2){
-                 lvdt.removeFooterView(footerview);
-                 try {
-                     JSONArray jsonArray = new JSONArray(response);
-                     for(int i=0;i<jsonArray.length();i++){
-                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                         id = jsonObject.getInt("id");
-                         Tendt = jsonObject.getString("tensp");
-                         Giadt = jsonObject.getInt("giasp");
-                         Hinhanhdt = jsonObject.getString("hinhanhsp");
-                         Motadt = jsonObject.getString("motasp");
-                         Iddpdt = jsonObject.getInt("idsanpham");
-                         mangdt.add(new Sanpham(id,Tendt,Giadt,Hinhanhdt,Motadt,Iddpdt));
-                         dienThoaiAdapter.notifyDataSetChanged();
+                int id = 0;
+                String Tendt = "";
+                int Giadt = 0;
+                String Hinhanhdt = "";
+                String Motadt = "";
+                int Iddpdt = 0;
+                if (response != null && response.length() != 2) {
+                    lvdt.removeFooterView(footerview);
+                    try {
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            id = jsonObject.getInt("id");
+                            Tendt = jsonObject.getString("tensp");
+                            Giadt = jsonObject.getInt("giasp");
+                            Hinhanhdt = jsonObject.getString("hinhanhsp");
+                            Motadt = jsonObject.getString("motasp");
+                            Iddpdt = jsonObject.getInt("idsanpham");
+                            mangdt.add(new Sanpham(id, Tendt, Giadt, Hinhanhdt, Motadt, Iddpdt));
+                            dienThoaiAdapter.notifyDataSetChanged();
 
-                     }
-                 } catch (JSONException e) {
-                     e.printStackTrace();
-                 }
-             }else{
-                 limitData = true;
-                 lvdt.removeFooterView(footerview);
-                 CheckConnection.ShowToast_Short(getApplicationContext(),"Đã hết dữ liệu");
-             }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    limitData = true;
+                    lvdt.removeFooterView(footerview);
+                    CheckConnection.ShowToast_Short(getApplicationContext(), "Đã hết dữ liệu");
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
+        }) {
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> param = new HashMap<String, String>();
-                param.put("idsanpham",String.valueOf(iddt));
+                HashMap<String, String> param = new HashMap<String, String>();
+                param.put("idsanpham", String.valueOf(iddt));
                 return param;
             }
         };
@@ -183,8 +212,8 @@ public class DienThoaiActivity extends AppCompatActivity {
 
 
     private void GetIdloaisp() {
-        iddt = getIntent().getIntExtra("idloaisanpham",-1);
-        Log.d("giatriloaisanpham",iddt+"");
+        iddt = getIntent().getIntExtra("idloaisanpham", -1);
+        Log.d("giatriloaisanpham", iddt + "");
 
     }
 
@@ -192,16 +221,17 @@ public class DienThoaiActivity extends AppCompatActivity {
         toolbardt = findViewById(R.id.toolbardienthoai);
         lvdt = findViewById(R.id.listviewdienthoai);
         mangdt = new ArrayList<>();
-        dienThoaiAdapter = new DienThoaiAdapter(getApplicationContext(),mangdt);
+        dienThoaiAdapter = new DienThoaiAdapter(getApplicationContext(), mangdt);
         lvdt.setAdapter(dienThoaiAdapter);
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        footerview = inflater.inflate(R.layout.progessbar,null);
+        footerview = inflater.inflate(R.layout.progessbar, null);
         mHandler = new mHandler();
     }
-    public class mHandler extends Handler{
+
+    public class mHandler extends Handler {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
                     lvdt.addFooterView(footerview);
                     break;
@@ -213,7 +243,8 @@ public class DienThoaiActivity extends AppCompatActivity {
             super.handleMessage(msg);
         }
     }
-    public class ThreadData extends Thread{
+
+    public class ThreadData extends Thread {
         @Override
         public void run() {
             mHandler.sendEmptyMessage(0);

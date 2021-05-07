@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +29,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.banhang.R;
 import com.example.banhang.adapter.LoaispAdapter;
 import com.example.banhang.adapter.SanphamAdapter;
@@ -46,7 +51,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
-    ViewFlipper viewFlipper;
+    private ImageSlider imageSlider;
     RecyclerView recyclerViewmanhinhchinh;
     NavigationView navigationView;
     ListView listViewmanhinhchinh;
@@ -59,12 +64,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Sanpham> mangsanpham;
     SanphamAdapter sanphamAdapter;
     public static ArrayList<Giohang> manggiohang;
-
+    private ArrayList<SlideModel> slideModelArrayList;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Anhxa();
+        sharedPreferences=getSharedPreferences(ManhinhchoActivity.SHARE_PREF,MODE_PRIVATE);
         //if(CheckConnection.haveNetworkConnection(getApplicationContext())){
             ActionBar();
             ActionViewFlipper();
@@ -100,14 +107,16 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        if(CheckConnection.haveNetworkConnection(getApplicationContext())){
-                            Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                            startActivity(intent);
-                        }else{
-                            CheckConnection.ShowToast_Short(getApplicationContext(),"Ban hay kiem tra lai ket noi");
-                        }
-                        drawerLayout.closeDrawer(GravityCompat.START);
+                        Toast.makeText(getApplicationContext(),sharedPreferences.getString(ManhinhchoActivity.ID,"")
+                                +sharedPreferences.getString(ManhinhchoActivity.NAME,"")
+                                        +sharedPreferences.getString(ManhinhchoActivity.ACCOUNT,"")
+                                        +sharedPreferences.getString(ManhinhchoActivity.PASSWORD,"")
+                                        +sharedPreferences.getString(ManhinhchoActivity.ADDRESS,"")
+                                        +sharedPreferences.getString(ManhinhchoActivity.DATE,"")
+                                ,Toast.LENGTH_SHORT
+                        ).show();
                         break;
+
                     case 1:
                         if(CheckConnection.haveNetworkConnection(getApplicationContext())){
                             Intent intent = new Intent(MainActivity.this,DienThoaiActivity.class);
@@ -138,13 +147,7 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case 4:
-                        if(CheckConnection.haveNetworkConnection(getApplicationContext())){
-                            Intent intent = new Intent(MainActivity.this,ThongTinActivity.class);
-                            startActivity(intent);
-                        }else{
-                            CheckConnection.ShowToast_Short(getApplicationContext(),"Ban hay kiem tra lai ket noi");
-                        }
-                        drawerLayout.closeDrawer(GravityCompat.START);
+                        finish();
                         break;
 
                 }
@@ -196,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                  if(response != null){
+                     mangloaisp.add(new Loaisp(0,"Tài khoản","https://cdn4.iconfinder.com/data/icons/simplicio/128x128/user.png"));
                      for(int i = 0;i<response.length();i++){
                          try {
                              JSONObject jsonObject = response.getJSONObject(i);
@@ -208,9 +212,10 @@ public class MainActivity extends AppCompatActivity {
                              e.printStackTrace();
                          }
                      }
-                     mangloaisp.add(3,new Loaisp(0,"Liên Hệ","https:" +
+                     mangloaisp.add(new Loaisp(0,"Liên Hệ","https:" +
                              "//cdn1.iconfinder.com/data/icons/mix-color-3/502/Untitled-12-512.png"));
-                     mangloaisp.add(4,new Loaisp(0,"Thông Tin","https://gotrangtri.vn/wp-content/uploads/2017/08/Chat-2b-icon.png"));
+                     mangloaisp.add(new Loaisp(0,"Thoát","https://cdn2.iconfinder.com/data/icons/UII_Icons/80x80/exit.png"));
+                     //mangloaisp.add(4,new Loaisp(0,"Thông Tin","https://gotrangtri.vn/wp-content/uploads/2017/08/Chat-2b-icon.png"));
                  }
             }
         }, new Response.ErrorListener() {
@@ -223,25 +228,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ActionViewFlipper() {
-        ArrayList<String> mangquangcao = new ArrayList<>();
-        mangquangcao.add("http://4.bp.blogspot.com/-gbvU2SCgKK4/U1dEQOiLmJI/AAAAAAAABlE/ZSDGzGt93bE/s1600/Hinh-nen-mua-he-11-1024x640.jpeg");
-        mangquangcao.add("https://sa.tinhte.vn/2014/08/2572609_Hinh_2.jpg");
-        mangquangcao.add("https://photo-cms-sggp.zadn.vn/Uploaded/2021/yfsgf/2020_09_24/hinh11_mzad.jpg");
-        mangquangcao.add("https://didongviet.vn/blog/wp-content/uploads/2020/04/Iphone-11-VNA__1200x628-3.jpg");
-        mangquangcao.add("https://channel.mediacdn.vn/2019/12/6/photo-1-1575609230273994632093.jpg");
-
-        for(int i=0;i<mangquangcao.size();i++){
-            ImageView imageView = new ImageView(getApplicationContext());
-            Picasso.with(getApplicationContext()).load(mangquangcao.get(i)).into(imageView);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            viewFlipper.addView(imageView);
-        }
-        viewFlipper.setFlipInterval(5000);
-        viewFlipper.setAutoStart(true);
-        Animation animation_slide_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_in_right);
-        Animation animation_slide_out = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_out_right);
-        viewFlipper.setInAnimation(animation_slide_in);
-        viewFlipper.setOutAnimation(animation_slide_out);
+        slideModelArrayList = new ArrayList<>();
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.Duongdanquangcao, response -> {
+            if (response != null) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        id = jsonObject.getInt("id");
+                        String slider = jsonObject.getString("quangcao");
+                        Log.e("##ER",id+ "  "+slider);
+                        slideModelArrayList.add(new SlideModel(slider, ScaleTypes.FIT));
+                    } catch (JSONException e) {
+                        Log.e("##ER",e.toString());
+                    }
+                }
+                imageSlider.setImageList(slideModelArrayList, ScaleTypes.FIT);
+            }
+        }, error -> Log.e("##ER",error.toString()));
+        requestQueue.add(jsonArrayRequest);
     }
 
     private void ActionBar() {
@@ -259,13 +264,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void Anhxa() {
         toolbar = findViewById(R.id.toolbarmanhinhchinh);
-        viewFlipper = findViewById(R.id.viewflipper);
+        imageSlider = findViewById(R.id.slider);
         recyclerViewmanhinhchinh = findViewById(R.id.recycleview);
         navigationView = findViewById(R.id.navigationview);
         listViewmanhinhchinh = findViewById(R.id.listviewmanhinhchinh);
         drawerLayout = findViewById(R.id.drawerlayout);
         mangloaisp = new ArrayList<>();
-        mangloaisp.add(0,new Loaisp(0,"Trang Chính","https://icons.iconarchive.com/icons/fps.hu/free-christmas-flat-circle/512/home-icon.png"));
+
         loaispAdapter = new LoaispAdapter(mangloaisp,getApplicationContext());
         listViewmanhinhchinh.setAdapter(loaispAdapter);
         mangsanpham = new ArrayList<>();
@@ -281,4 +286,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            finish();
+        }
+    }
 }

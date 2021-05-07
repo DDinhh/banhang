@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.banhang.R;
 import com.example.banhang.model.Sanpham;
 import com.squareup.picasso.Picasso;
@@ -63,11 +64,14 @@ public class LaptopAdapter extends BaseAdapter {
         Sanpham sanpham = (Sanpham) getItem(position);
         viewHolder.txttenlaptop.setText(sanpham.getTensanpham());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        viewHolder.txtgialaptop.setText("Giá :" + decimalFormat.format(sanpham.getGiasanpham()) + "Đ");
+        viewHolder.txtgialaptop.setText(decimalFormat.format(sanpham.getGiasanpham()) + " đ");
         viewHolder.txtmotalaptop.setMaxLines(2);
         viewHolder.txtmotalaptop.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.txtmotalaptop.setText(sanpham.getMotasanpham());
-        Picasso.with(context).load(sanpham.getHinhanhsanpham()).placeholder(R.drawable.cho).error(R.drawable.loi).into(viewHolder.imglaptop);
+        Glide.with(context).load(sanpham.getHinhanhsanpham())
+                .placeholder(R.drawable.cho)
+                .into(viewHolder.imglaptop);
+     //   Picasso.with(context).load(sanpham.getHinhanhsanpham()).placeholder(R.drawable.cho).error(R.drawable.loi).into(viewHolder.imglaptop);
         return convertView;
     }
 }

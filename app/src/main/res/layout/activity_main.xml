@@ -23,12 +23,15 @@
                  android:layout_height="?attr/actionBarSize">
 
              </androidx.appcompat.widget.Toolbar>
-             <ViewFlipper
-                 android:id="@+id/viewflipper"
-                 android:layout_width="match_parent"
-                 android:layout_height="200dp">
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:iss_auto_cycle="true"
+                app:iss_delay="250"
+                app:iss_period="2500"
+                />
 
-             </ViewFlipper>
              <LinearLayout
                  android:background="#E4E5E8"
                  android:orientation="vertical"
@@ -36,7 +39,7 @@
                  android:layout_height="match_parent">
                  <TextView
                      android:gravity="center"
-                     android:textSize="20sp"
+                     android:textSize="17sp"
                      android:textStyle="bold"
                      android:textColor="@color/black"
                      android:layout_margin="5dp"

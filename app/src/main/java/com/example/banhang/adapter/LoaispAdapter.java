@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.banhang.R;
 import com.example.banhang.model.Loaisp;
 import com.squareup.picasso.Picasso;
@@ -58,7 +59,10 @@ public class LoaispAdapter extends BaseAdapter {
         }
         Loaisp loaisp = (Loaisp) getItem(position);
         viewHolder.txttenloaisp.setText(loaisp.getTenloaisp());
-        Picasso.with(context).load(loaisp.getHinhanhloaisp()).placeholder(R.drawable.cho).error(R.drawable.loi).into(viewHolder.imgloaisp);
+        Glide.with(context).load(loaisp.getHinhanhloaisp())
+                .placeholder(R.drawable.cho)
+                .into(viewHolder.imgloaisp);
+     //   Picasso.with(context).load(loaisp.getHinhanhloaisp()).placeholder(R.drawable.cho).error(R.drawable.loi).into(viewHolder.imgloaisp);
         return convertView;
     }
 }

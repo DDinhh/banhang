@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.banhang.R;
 import com.example.banhang.activity.GiohangActivity;
 import com.example.banhang.activity.MainActivity;
@@ -67,8 +68,11 @@ public class GiohangAdapter extends BaseAdapter {
         Giohang giohang = (Giohang) getItem(position);
         viewHolder.txttengiohang.setText(giohang.getTensp());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        viewHolder.txtgiagiohang.setText(decimalFormat.format(giohang.getGiasp())+"Đ");
-        Picasso.with(context).load(giohang.getHinhsp()).placeholder(R.drawable.cho).error(R.drawable.loi).into(viewHolder.imggiohang);
+        viewHolder.txtgiagiohang.setText(decimalFormat.format(giohang.getGiasp())+" đ");
+        Glide.with(context).load(giohang.getHinhsp())
+                .placeholder(R.drawable.cho)
+                .into(viewHolder.imggiohang);
+   //     Picasso.with(context).load(giohang.getHinhsp()).placeholder(R.drawable.cho).error(R.drawable.loi).into(viewHolder.imggiohang);
         viewHolder.btnvalues.setText(giohang.getSoluongsp() +"");
         int sl = Integer.parseInt(viewHolder.btnvalues.getText().toString());
         if(sl >=10 ){
@@ -92,7 +96,7 @@ public class GiohangAdapter extends BaseAdapter {
                 long giamoinhat = (giaht * slmoinhat)/slhientai;
                 MainActivity.manggiohang.get(position).setGiasp(giamoinhat);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-                finalViewHolder.txtgiagiohang.setText(decimalFormat.format(giamoinhat)+"Đ");
+                finalViewHolder.txtgiagiohang.setText(decimalFormat.format(giamoinhat)+" đ");
                 GiohangActivity.EventUltil();
                 if(slmoinhat > 9){
                     finalViewHolder.btnplus.setVisibility(View.INVISIBLE);
