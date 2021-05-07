@@ -76,7 +76,7 @@
             android:id="@+id/edittextdangkitaikhoan"
             android:textSize="17sp"
             android:layout_marginLeft="30dp"
-            android:inputType="number|numberPassword"
+            android:inputType="number"
             android:hint="Số điện thoại"
 
             android:layout_width="match_parent"
@@ -130,7 +130,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-
+            android:maxLines="2"
+            android:maxLength="50"
             android:hint="Nhập địa chỉ"
 
 

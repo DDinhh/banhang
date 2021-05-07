@@ -16,26 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.banhang.R;
-import com.example.banhang.Retrofit2.APIUtils;
-import com.example.banhang.Retrofit2.DataClient;
-import com.example.banhang.Retrofit2.Sinhvien;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DangnhapActivity extends AppCompatActivity {
-    Button btndangnhap;
+    Button btndangnhap,btnhuy;
     TextView btndangki, tvquenmatkhau;
     EditText edttk, edtmk;
     String taikhoan;
     String matkhau;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-    ArrayList<Sinhvien> mangsinhvien=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,39 +50,24 @@ public class DangnhapActivity extends AppCompatActivity {
         btndangnhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taikhoan = edttk.getText().toString();
-                matkhau = edtmk.getText().toString();
+                taikhoan = edttk.getText().toString().trim();
+                matkhau = edtmk.getText().toString().trim();
 
                 if (taikhoan.length() > 0 && matkhau.length() > 0) {
-                    DataClient dataClient = APIUtils.getData();
-                    Call<List<Sinhvien>> callback = dataClient.logindata(taikhoan, matkhau);
-                    callback.enqueue(new Callback<List<Sinhvien>>() {
-                        @Override
-                        public void onResponse(Call<List<Sinhvien>> call, Response<List<Sinhvien>> response) {
-                            mangsinhvien = (ArrayList<Sinhvien>) response.body();
-                            if (mangsinhvien.size() > 0) {
-                                for (int i = 0; i < mangsinhvien.size(); i++) {
-                                    editor.putString(ManhinhchoActivity.ID, mangsinhvien.get(i).getId());
-                                    editor.putString(ManhinhchoActivity.NAME, mangsinhvien.get(i).getTen());
-                                    editor.putString(ManhinhchoActivity.ACCOUNT, mangsinhvien.get(i).getTaikhoan());
-                                    editor.putString(ManhinhchoActivity.PASSWORD, mangsinhvien.get(i).getMatkhau());
-                                    editor.putString(ManhinhchoActivity.DATE, mangsinhvien.get(i).getNgaysinh());
-                                    editor.putString(ManhinhchoActivity.ADDRESS, mangsinhvien.get(i).getDiachi());
-                                    editor.apply();
-                                }
-                                Log.e("AA",mangsinhvien.size()+"");
-                                Intent intent = new Intent(DangnhapActivity.this, MainActivity.class);
-                                startActivity(intent);
-                            }else{
-                                Toast.makeText(getApplicationContext(),"Lỗi",Toast.LENGTH_SHORT).show();
-                            }
+                    for(int i=0;i<ManhinhchoActivity.listKhachhang.size();i++) {
+                        if(taikhoan.equals(ManhinhchoActivity.listKhachhang.get(i).getAccount())&&
+                        matkhau.equals(ManhinhchoActivity.listKhachhang.get(i).getPassword())) {
+                            editor.putInt(ManhinhchoActivity.ID, ManhinhchoActivity.listKhachhang.get(i).getId());
+                            editor.putString(ManhinhchoActivity.NAME, ManhinhchoActivity.listKhachhang.get(i).getName());
+                            editor.putString(ManhinhchoActivity.ACCOUNT, ManhinhchoActivity.listKhachhang.get(i).getAccount());
+                            editor.putString(ManhinhchoActivity.PASSWORD, ManhinhchoActivity.listKhachhang.get(i).getPassword());
+                            editor.putString(ManhinhchoActivity.DATE, ManhinhchoActivity.listKhachhang.get(i).getDate());
+                            editor.putString(ManhinhchoActivity.ADDRESS, ManhinhchoActivity.listKhachhang.get(i).getAddress());
+                            editor.apply();
+                            Toast.makeText(DangnhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }
-
-                        @Override
-                        public void onFailure(Call<List<Sinhvien>> call, Throwable t) {
-                            Toast.makeText(DangnhapActivity.this, "Tài khoản / mật khẩu không đúng", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    }
                 } else {
                     Toast.makeText(DangnhapActivity.this, "Vui lòng nhập đủ thông tin!", Toast.LENGTH_SHORT).show();
                 }
@@ -109,6 +85,13 @@ public class DangnhapActivity extends AppCompatActivity {
         btndangki = findViewById(R.id.buttondangki);
         edtmk = findViewById(R.id.edittextmatkhau);
         edttk = findViewById(R.id.edittexttaikhoan);
+        btnhuy=findViewById(R.id.buttonhuy);
+        btnhuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

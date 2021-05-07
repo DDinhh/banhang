@@ -33,6 +33,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.banhang.R;
+
 import com.example.banhang.adapter.LoaispAdapter;
 import com.example.banhang.adapter.SanphamAdapter;
 import com.example.banhang.model.Giohang;
@@ -107,14 +108,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        Toast.makeText(getApplicationContext(),sharedPreferences.getString(ManhinhchoActivity.ID,"")
-                                +sharedPreferences.getString(ManhinhchoActivity.NAME,"")
-                                        +sharedPreferences.getString(ManhinhchoActivity.ACCOUNT,"")
-                                        +sharedPreferences.getString(ManhinhchoActivity.PASSWORD,"")
-                                        +sharedPreferences.getString(ManhinhchoActivity.ADDRESS,"")
-                                        +sharedPreferences.getString(ManhinhchoActivity.DATE,"")
-                                ,Toast.LENGTH_SHORT
-                        ).show();
+                        startActivity(new Intent(getApplicationContext(), ThongtinActivity.class));
+                        finish();
                         break;
 
                     case 1:

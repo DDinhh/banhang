@@ -112,11 +112,23 @@
                 android:layout_weight="1"
                 android:id="@+id/buttondangnhap"
                 android:textSize="17sp"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginLeft="30dp"
                 android:padding="10dp"
                 android:backgroundTint="#E91E63"
                 android:text="Đăng nhập"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:id="@+id/buttonhuy"
+                android:textSize="17sp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="10dp"
+                android:padding="10dp"
+                android:backgroundTint="#0A0317"
+                android:text="Thoát"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

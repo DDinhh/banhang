@@ -42,13 +42,14 @@
                     android:id="@+id/textviewgiadienthoai"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
                 <TextView
-                    android:textSize="15sp"
-                    android:text="Hiển thị"
-                    android:layout_margin="5sp"
                     android:id="@+id/textviewmotadienthoai"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5sp"
+                    android:text="Hiển thị"
+                    android:textSize="15sp" />
 
             </LinearLayout>
         </LinearLayout>

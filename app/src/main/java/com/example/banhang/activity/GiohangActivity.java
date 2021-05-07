@@ -1,5 +1,6 @@
 package com.example.banhang.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,20 +11,39 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.banhang.R;
 import com.example.banhang.adapter.GiohangAdapter;
 import com.example.banhang.model.Giohang;
 import com.example.banhang.ultil.CheckConnection;
+import com.example.banhang.ultil.Server;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GiohangActivity extends AppCompatActivity {
     ListView lvgiohang;
@@ -33,7 +53,7 @@ public class GiohangActivity extends AppCompatActivity {
     Toolbar toolbargiohang;
     GiohangAdapter giohangAdapter;
     SharedPreferences sharedPreferences;
-
+    public static long tongtien;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,13 +93,97 @@ public class GiohangActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_xacnhan);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(true);
+        EditText editText=dialog.findViewById(R.id.e1);
         Button t1 = dialog.findViewById(R.id.buttonxacnhan);
         Button t2 = dialog.findViewById(R.id.buttonhuy);
         t1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String ten = sharedPreferences.getString(ManhinhchoActivity.NAME,"");
+                final String sdt = sharedPreferences.getString(ManhinhchoActivity.ACCOUNT,"");
+                final String note = editText.getText().toString().trim();
+                DateFormat df = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+                String date = df.format(Calendar.getInstance().getTime());
+                final String diachi = sharedPreferences.getString(ManhinhchoActivity.ADDRESS,"");
+                if(ten.length()>0 && sdt.length()>0 ){
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.Duongdandonhangmoi, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(final String madonhang) {
+                            Log.d("madonhang",madonhang);
+                            if(Integer.parseInt(madonhang)>0){
+                                RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
+                                StringRequest stringRequest1 = new StringRequest(Request.Method.POST, Server.Duongdanchitietdonhang, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if(response.equals("1")){
+                                            MainActivity.manggiohang.clear();
+                                            CheckConnection.ShowToast_Short(getApplicationContext(),"Xác nhận đơn hàng thành công");
+                                            finish();
+                                            CheckConnection.ShowToast_Short(getApplicationContext(),"Mời bạn tiếp tục mua hàng");
+                                        }else {
+                                            CheckConnection.ShowToast_Short(getApplicationContext(),"Dữ liệu giỏ hàng bị lỗi");
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
 
+                                    }
+                                }){
+                                    @Nullable
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        JSONArray jsonArray = new JSONArray();
+                                        for(int i=0;i<MainActivity.manggiohang.size();i++){
+                                            JSONObject jsonObject= new JSONObject();
+                                            try {
+                                                jsonObject.put("madonhang",madonhang);
+                                                jsonObject.put("masanpham",MainActivity.manggiohang.get(i).getIdsp());
+                                                jsonObject.put("tensanpham",MainActivity.manggiohang.get(i).getTensp());
+                                                jsonObject.put("giasanpham",MainActivity.manggiohang.get(i).getGiasp());
+                                                jsonObject.put("soluongsanpham",MainActivity.manggiohang.get(i).getSoluongsp());
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            jsonArray.put(jsonObject);
+                                        }
+                                        HashMap<String,String > hashMap = new HashMap<>();
+                                        hashMap.put("json",jsonArray.toString());
+                                        return hashMap;
+                                    }
+                                };
+                                requestQueue1.add(stringRequest1);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }){
+                        @Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String,String> hashMap = new HashMap<>();
+                            hashMap.put("tenkhachhang",ten);
+                            hashMap.put("sodienthoai",sdt);
+
+                            hashMap.put("diachi",diachi);
+                            hashMap.put("ngaydathang",date);
+                            hashMap.put("tongtien", String.valueOf(tongtien));
+
+                            hashMap.put("ghichu",note);
+                            hashMap.put("trangthai", String.valueOf(0));
+                            return hashMap;
+                        }
+                    };
+                    requestQueue.add(stringRequest);
+                }else {
+                    CheckConnection.ShowToast_Short(getApplicationContext(),"Hãy kiểm tra lại dữ liệu");
+                }
             }
+
         });
         t2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +234,7 @@ public class GiohangActivity extends AppCompatActivity {
     }
 
     public static void EventUltil() {
-        long tongtien = 0;
+        tongtien = 0;
         for (int i = 0; i < MainActivity.manggiohang.size(); i++) {
             tongtien += MainActivity.manggiohang.get(i).getGiasp();
 
