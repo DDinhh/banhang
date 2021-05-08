@@ -43,7 +43,7 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
 
-                android:textSize="17sp"
+                android:textSize="15sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <LinearLayout
@@ -53,7 +53,7 @@
                 <TextView
                     android:layout_gravity="center"
                     android:id="@+id/textviewgiachitietsanpham"
-                    android:textSize="17sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:text="Giá sản phẩm"
                     android:textColor="#FF0033"
@@ -76,7 +76,7 @@
                 android:layout_alignParentBottom="true"
                 android:id="@+id/buttondatmua"
                 android:textColor="@color/white"
-                android:textSize="17sp"
+                android:textSize="15sp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/black"
                 android:text="Thêm giỏ hàng"

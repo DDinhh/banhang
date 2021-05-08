@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.banhang.R;
 import com.example.banhang.activity.DangnhapActivity;
@@ -37,7 +38,7 @@ public class ThongtinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thongtin);
         Anhxa();
-        setData();
+      //  setData();
     }
 
 
@@ -104,8 +105,9 @@ public class ThongtinActivity extends AppCompatActivity {
     }
     private void setData()
     {
-        viewPager.setAdapter(new TabAdapter(getSupportFragmentManager(),1,2,3,sharedPreferences.getString(ManhinhchoActivity.ACCOUNT,""),
-                new String[]{"Đang giao","Hoàn thành","Hủy"}, Server.Duongdandonhang));
+
+        viewPager.setAdapter(new TabAdapter(getSupportFragmentManager(),0,1,2,sharedPreferences.getString(ManhinhchoActivity.ACCOUNT,""),
+                new String[]{"Đang giao","Đã nhận","Hủy"}, Server.Duongdandonhang));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -123,5 +125,11 @@ public class ThongtinActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setData();
     }
 }

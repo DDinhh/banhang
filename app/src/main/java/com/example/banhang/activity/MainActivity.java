@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         startActivity(new Intent(getApplicationContext(), ThongtinActivity.class));
-                        finish();
+
                         break;
 
                     case 1:
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3:
                         if(CheckConnection.haveNetworkConnection(getApplicationContext())){
-                            Intent intent = new Intent(MainActivity.this,LienHeActivity.class);
+                            Intent intent = new Intent(MainActivity.this,SanphamkhacActivity.class);
                             startActivity(intent);
                         }else{
                             CheckConnection.ShowToast_Short(getApplicationContext(),"Ban hay kiem tra lai ket noi");
@@ -142,6 +142,15 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     case 4:
+                        if(CheckConnection.haveNetworkConnection(getApplicationContext())){
+                            Intent intent = new Intent(MainActivity.this,LienHeActivity.class);
+                            startActivity(intent);
+                        }else{
+                            CheckConnection.ShowToast_Short(getApplicationContext(),"Ban hay kiem tra lai ket noi");
+                        }
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case 5:
                         finish();
                         break;
 
@@ -164,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     int IDsanpham = 0;
                     for(int i=0;i<response.length();i++){
                         try {
+
                             JSONObject jsonObject = response.getJSONObject(i);
                             ID = jsonObject.getInt("id");
                             Tensanpham = jsonObject.getString("tensp");
@@ -173,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                             IDsanpham = jsonObject.getInt("idsanpham");
                             mangsanpham.add(new Sanpham(ID,Tensanpham,Giasanpham,Hinhanhsanpham,Motasanpham,IDsanpham));
                             sanphamAdapter.notifyDataSetChanged();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -197,6 +208,10 @@ public class MainActivity extends AppCompatActivity {
                      mangloaisp.add(new Loaisp(0,"Tài khoản","https://cdn4.iconfinder.com/data/icons/simplicio/128x128/user.png"));
                      for(int i = 0;i<response.length();i++){
                          try {
+                             if(i==2)
+                             {
+                                 break;
+                             }
                              JSONObject jsonObject = response.getJSONObject(i);
                              id = jsonObject.getInt("id");
                              tenloaisp = jsonObject.getString("tenloaisp");
@@ -207,10 +222,11 @@ public class MainActivity extends AppCompatActivity {
                              e.printStackTrace();
                          }
                      }
+                        mangloaisp.add(new Loaisp(0,"Sản phẩm khác","https://www.flaticon.com/svg/vstatic/svg/3567/3567284.svg?token=exp=1620438104~hmac=6f24d373c475fde5e07d9ef8bcf2527b"));
                      mangloaisp.add(new Loaisp(0,"Liên Hệ","https:" +
                              "//cdn1.iconfinder.com/data/icons/mix-color-3/502/Untitled-12-512.png"));
                      mangloaisp.add(new Loaisp(0,"Thoát","https://cdn2.iconfinder.com/data/icons/UII_Icons/80x80/exit.png"));
-                     //mangloaisp.add(4,new Loaisp(0,"Thông Tin","https://gotrangtri.vn/wp-content/uploads/2017/08/Chat-2b-icon.png"));
+
                  }
             }
         }, new Response.ErrorListener() {

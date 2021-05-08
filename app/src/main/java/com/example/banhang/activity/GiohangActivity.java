@@ -118,6 +118,7 @@ public class GiohangActivity extends AppCompatActivity {
                                     public void onResponse(String response) {
                                         if(response.equals("1")){
                                             MainActivity.manggiohang.clear();
+                                            dialog.dismiss();
                                             CheckConnection.ShowToast_Short(getApplicationContext(),"Xác nhận đơn hàng thành công");
                                             finish();
                                             CheckConnection.ShowToast_Short(getApplicationContext(),"Mời bạn tiếp tục mua hàng");
@@ -139,6 +140,7 @@ public class GiohangActivity extends AppCompatActivity {
                                             JSONObject jsonObject= new JSONObject();
                                             try {
                                                 jsonObject.put("madonhang",madonhang);
+                                                jsonObject.put("hinhanhsanpham",MainActivity.manggiohang.get(i).getHinhsp());
                                                 jsonObject.put("masanpham",MainActivity.manggiohang.get(i).getIdsp());
                                                 jsonObject.put("tensanpham",MainActivity.manggiohang.get(i).getTensp());
                                                 jsonObject.put("giasanpham",MainActivity.manggiohang.get(i).getGiasp());

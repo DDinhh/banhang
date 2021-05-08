@@ -72,7 +72,7 @@ public class LapTopActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search,menu);
+        getMenuInflater().inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -83,8 +83,7 @@ public class LapTopActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),GiohangActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.menutimkiem:
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

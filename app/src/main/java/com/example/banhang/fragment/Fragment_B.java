@@ -1,5 +1,6 @@
 package com.example.banhang.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -20,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.banhang.R;
+import com.example.banhang.activity.ChitietdonhangActivity;
 import com.example.banhang.adapter.DonHangAdapter;
 import com.example.banhang.model.Donhang;
 
@@ -53,7 +56,7 @@ public class Fragment_B extends Fragment {
         view = inflater.inflate(R.layout.fragment, container, false);
         recyclerView = view.findViewById(R.id.recycler_fragment);
         textviewthongbao=view.findViewById(R.id.textviewthongbao);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
@@ -101,7 +104,10 @@ public class Fragment_B extends Fragment {
                         adapter.setItemClickListener(new DonHangAdapter.ClickListener() {
                             @Override
                             public void onItemClick(int position, View v) {
-
+                                Intent intent = new Intent(getContext(), ChitietdonhangActivity.class);
+                                intent.putExtra("madonhang", products.get(position).getId());
+                                intent.putExtra("trangthai", products.get(position).getStt());
+                                startActivity(intent);
                             }
                         });
                     }
@@ -117,11 +123,15 @@ public class Fragment_B extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> pa = new HashMap<>();
-                pa.put("tk", String.valueOf(tk));
+                pa.put("sodienthoai", String.valueOf(tk));
                 pa.put("trangthai", String.valueOf(trangthai));
                 return pa;
             }
         };
         requestQueue.add(request);
+    }@Override
+    public void onPause() {
+        super.onPause();
+        products.clear();
     }
 }

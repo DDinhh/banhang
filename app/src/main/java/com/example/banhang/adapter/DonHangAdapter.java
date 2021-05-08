@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHolder>  {
+public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHolder> {
     List<Donhang> list;
 
     Context context;
@@ -39,11 +40,10 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Donhang oder=list.get(position);
-        if(oder.getNote().isEmpty())
-        {
+        Donhang oder = list.get(position);
+        if (oder.getNote().isEmpty()) {
             holder.linearLayout.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.linearLayout.setVisibility(View.VISIBLE);
 
         }
@@ -51,16 +51,18 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
         holder.tv_date.setText(oder.getDate());
         holder.tv_address.setText(oder.getAddress());
         DecimalFormat df = new DecimalFormat("###,###,###");
-        long x= Long.parseLong(oder.getPrice());
-        holder.tv_price.setText(""+df.format(x)+" đ");
-        if(oder.getStt()==0)
-        {
+        long x = Long.parseLong(oder.getPrice());
+        holder.tv_price.setText("" + df.format(x) + " đ");
+        holder.iv_eye.setVisibility(View.GONE);
+        if (oder.getStt() == 0) {
             holder.background.setBackgroundResource(R.drawable.cst_edittext);
-        }else if(oder.getStt()==1)
-        {
+
+        } else if (oder.getStt() == 1) {
             holder.background.setBackgroundResource(R.drawable.cst_bg_true);
-        }else {
+
+        } else {
             holder.background.setBackgroundResource(R.drawable.cst_bg_false);
+
         }
     }
 
@@ -70,18 +72,22 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
     }
 
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        LinearLayout background,linearLayout;
-        TextView tv_date,tv_note,tv_address,tv_price;
+        LinearLayout background, linearLayout;
+        TextView tv_date, tv_note, tv_address, tv_price;
+        ImageView iv_eye;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_date=itemView.findViewById(R.id.tv_date);
-            linearLayout=itemView.findViewById(R.id.layout_note);
-            tv_address=itemView.findViewById(R.id.tv_address);
-            tv_note=itemView.findViewById(R.id.tv_note);
-            tv_price=itemView.findViewById(R.id.tv_price);
-            background=itemView.findViewById(R.id.background_user);
+            tv_date = itemView.findViewById(R.id.tv_date);
+            linearLayout = itemView.findViewById(R.id.layout_note);
+            tv_address = itemView.findViewById(R.id.tv_address);
+            tv_note = itemView.findViewById(R.id.tv_note);
+            tv_price = itemView.findViewById(R.id.tv_price);
+            background = itemView.findViewById(R.id.background_user);
+            iv_eye = itemView.findViewById(R.id.ivxem);
+
+
             itemView.setOnClickListener(this);
         }
 
@@ -99,5 +105,6 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.ViewHold
 
     public interface ClickListener {
         void onItemClick(int position, View v);
+
     }
 }

@@ -96,45 +96,66 @@ public class DangkiActivity extends AppCompatActivity {
                 diachi = edaddress.getText().toString().trim();
                 ngaysinh = eddate.getText().toString().trim();
                 if (taikhoan.length() > 0 && matkhau.length() > 0 && hoten.length() > 0 && diachi.length() > 0 && ngaysinh.length() > 0) {
-                    for(int i=0;i<ManhinhchoActivity.listKhachhang.size();i++)
-                    {
 
-                        if(!taikhoan.equals(ManhinhchoActivity.listKhachhang.get(i).getAccount()))
-                        {
-                            RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
-                            StringRequest stringRequest1 = new StringRequest(Request.Method.POST, Server.Duongdandangky, new com.android.volley.Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if (response.equals("1")) {
-                                        Toast.makeText(getApplicationContext(),"Đăng ký tài khoản thành công",Toast.LENGTH_SHORT).show();
-                                        ManhinhchoActivity.listKhachhang.clear();
-                                        getKhachhang();
-                                        finish();
+                    RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
+                    StringRequest stringRequest1 = new StringRequest(Request.Method.POST, Server.Duongdankiemtrataikhoan, new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response.equals("1")) {
+                                Toast.makeText(getApplicationContext(), "Tài khoản đã tồn tại", Toast.LENGTH_SHORT).show();
+                            } else {
+                                RequestQueue requestQueue1 = Volley.newRequestQueue(getApplicationContext());
+                                StringRequest stringRequest1 = new StringRequest(Request.Method.POST, Server.Duongdandangky, new com.android.volley.Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if (response.equals("1")) {
+                                            Toast.makeText(getApplicationContext(), "Đăng ký tài khoản thành công", Toast.LENGTH_SHORT).show();
+                                            ManhinhchoActivity.listKhachhang.clear();
+                                            getKhachhang();
+                                            finish();
+                                        } else {
+
+                                        }
                                     }
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
 
-                                }
-                            }) {
-                                @Nullable
-                                @Override
-                                protected Map<String, String> getParams() throws AuthFailureError {
-                                    HashMap<String, String> hashMap = new HashMap<>();
-                                    hashMap.put("ten", hoten);
-                                    hashMap.put("tk", taikhoan);
+                                    }
+                                }) {
+                                    @Nullable
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        HashMap<String, String> hashMap = new HashMap<>();
+                                        hashMap.put("ten", hoten);
+                                        hashMap.put("tk", taikhoan);
 
-                                    hashMap.put("mk", matkhau);
-                                    hashMap.put("ngaysinh", ngaysinh);
-                                    hashMap.put("diachi", diachi);
+                                        hashMap.put("mk", matkhau);
+                                        hashMap.put("ngaysinh", ngaysinh);
+                                        hashMap.put("diachi", diachi);
 
-                                    return hashMap;
-                                }
-                            };
-                            requestQueue1.add(stringRequest1);
+                                        return hashMap;
+                                    }
+                                };
+                                requestQueue1.add(stringRequest1);
+                            }
                         }
-                    }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+                        @Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("tk", taikhoan);
+                            return hashMap;
+                        }
+                    };
+                    requestQueue1.add(stringRequest1);
+
 
                 } else {
                     Toast.makeText(DangkiActivity.this, "Hãy nhập đủ thông tin", Toast.LENGTH_SHORT).show();
@@ -150,18 +171,18 @@ public class DangkiActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.Duongdankhachhang, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                if(response != null){
+                if (response != null) {
 
-                    for(int i=0;i<response.length();i++){
+                    for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
-                            int id=jsonObject.getInt("id");
+                            int id = jsonObject.getInt("id");
                             String account = jsonObject.getString("tk");
                             String password = jsonObject.getString("mk");
                             String name = jsonObject.getString("ten");
                             String address = jsonObject.getString("diachi");
                             String date = jsonObject.getString("ngaysinh");
-                            ManhinhchoActivity.listKhachhang.add(new Khachhang(id,account,password,name,address,date));
+                            ManhinhchoActivity.listKhachhang.add(new Khachhang(id, account, password, name, address, date));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -176,6 +197,7 @@ public class DangkiActivity extends AppCompatActivity {
         });
         requestQueue.add(jsonArrayRequest);
     }
+
     private void AnhXa() {
 
         toolbardt = findViewById(R.id.toolbardangki);

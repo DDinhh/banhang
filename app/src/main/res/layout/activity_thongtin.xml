@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ThongtinActivity">
+    tools:context=".activity.ThongtinActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbardangki"

@@ -66,6 +66,7 @@ public class DangnhapActivity extends AppCompatActivity {
                             editor.apply();
                             Toast.makeText(DangnhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            finish();
                         }
                     }
                 } else {

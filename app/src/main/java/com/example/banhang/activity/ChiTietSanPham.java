@@ -104,7 +104,7 @@ public class ChiTietSanPham extends AppCompatActivity {
 
         Sanpham sanpham = (Sanpham) getIntent().getSerializableExtra("thongtinsanpham");
         id = sanpham.getID();
-        TenChitiet = sanpham.getTensanpham();
+        TenChitiet = sanpham.getTensanpham().trim();
         GiaChitiet = sanpham.getGiasanpham();
         HinhanhChitiet = sanpham.getHinhanhsanpham();
         MotaChitiet = sanpham.getMotasanpham();
