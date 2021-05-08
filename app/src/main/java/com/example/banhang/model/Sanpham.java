@@ -6,9 +6,20 @@ public class Sanpham implements Serializable {
     public int ID;
     public String Tensanpham;
     public Integer Giasanpham;
+    public String Giagoc;
     public String Hinhanhsanpham;
     public String Motasanpham;
     public int IDSanpham;
+
+    public Sanpham(int ID, String tensanpham, Integer giasanpham, String giagoc, String hinhanhsanpham, String motasanpham, int IDSanpham) {
+        this.ID = ID;
+        Tensanpham = tensanpham;
+        Giasanpham = giasanpham;
+        Giagoc = giagoc;
+        Hinhanhsanpham = hinhanhsanpham;
+        Motasanpham = motasanpham;
+        this.IDSanpham = IDSanpham;
+    }
 
     public Sanpham(int ID, String tensanpham, Integer giasanpham, String hinhanhsanpham, String motasanpham, int IDSanpham) {
         this.ID = ID;
@@ -17,6 +28,14 @@ public class Sanpham implements Serializable {
         Hinhanhsanpham = hinhanhsanpham;
         Motasanpham = motasanpham;
         this.IDSanpham = IDSanpham;
+    }
+
+    public String getGiagoc() {
+        return Giagoc;
+    }
+
+    public void setGiagoc(String giagoc) {
+        Giagoc = giagoc;
     }
 
     public int getID() {

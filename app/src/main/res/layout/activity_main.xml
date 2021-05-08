@@ -4,63 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".activity.MainActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-             <androidx.appcompat.widget.Toolbar
-                 android:id="@+id/toolbarmanhinhchinh"
-                 app:title="Trang Chinh"
-                 app:titleTextColor="@color/white"
-                 android:background="@color/black"
-                 android:layout_width="match_parent"
-                 android:layout_height="?attr/actionBarSize">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-             </androidx.appcompat.widget.Toolbar>
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/slider"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarmanhinhchinh"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:iss_auto_cycle="true"
-                app:iss_delay="250"
-                app:iss_period="2500"
-                />
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/black"
+                app:title="Trang Chính"
+                app:titleTextColor="@color/white">
 
-             <LinearLayout
-                 android:background="#E4E5E8"
-                 android:orientation="vertical"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent">
-                 <TextView
-                     android:gravity="center"
-                     android:textSize="17sp"
-                     android:textStyle="bold"
-                     android:textColor="@color/black"
-                     android:layout_margin="5dp"
-                     android:textAllCaps="true"
-                     android:text="Sản phẩm mới nhất"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"/>
-                 <androidx.recyclerview.widget.RecyclerView
-                     android:id="@+id/recycleview"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent">
+            </androidx.appcompat.widget.Toolbar>
 
-                 </androidx.recyclerview.widget.RecyclerView>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-             </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.denzcoskun.imageslider.ImageSlider
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        app:iss_auto_cycle="true"
+                        app:iss_delay="250"
+                        app:iss_period="1500" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#E4E5E8"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:text="Sản phẩm mới nhất"
+                            android:textAllCaps="true"
+                            android:textColor="#781010"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycleview"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#E4E5E8"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:text="Sản phẩm giảm giá"
+                            android:textAllCaps="true"
+                            android:textColor="#781010"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycleview_giagoc"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </ScrollView>
         </LinearLayout>
+
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigationview"
-            android:layout_gravity="start"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="start">
+
             <ListView
                 android:id="@+id/listviewmanhinhchinh"
                 android:layout_width="match_parent"

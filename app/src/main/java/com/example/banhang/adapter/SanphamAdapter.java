@@ -2,6 +2,10 @@ package com.example.banhang.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,13 +47,29 @@ public class SanphamAdapter extends RecyclerView.Adapter<SanphamAdapter.ItemHold
     @Override
     public void onBindViewHolder(@NonNull ItemHolder holder, int position) {
         Sanpham sanpham = arraysanpham.get(position);
-        holder.txttensanpham.setText(sanpham.getTensanpham());
+        holder.txttensanpham.setText(sanpham.getTensanpham().trim());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         holder.txtgiasanpham.setText(decimalFormat.format(sanpham.getGiasanpham()) + " đ");
+
+
+
         Glide.with(context).load(sanpham.getHinhanhsanpham())
                 .placeholder(R.drawable.cho)
                 .into(holder.imghinhsanpham);
-      //  Picasso.with(context).load(sanpham.getHinhanhsanpham()).placeholder(R.drawable.cho).error(R.drawable.loi).into(holder.imghinhsanpham);
+        if(sanpham.getGiagoc()==null)
+        {
+            holder.txtgiagoc.setVisibility(View.GONE);
+        }else{
+            holder.txtgiagoc.setVisibility(View.VISIBLE);
+            long x= Long.parseLong(sanpham.getGiagoc());
+            String str=decimalFormat.format(x)+ " đ";
+            StrikethroughSpan strikethroughSpan=new StrikethroughSpan();
+            SpannableString ss=new SpannableString(str);
+            ss.setSpan(strikethroughSpan,0,str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.txtgiagoc.setText(ss);
+
+        }
+
     }
 
     @Override
@@ -59,13 +79,14 @@ public class SanphamAdapter extends RecyclerView.Adapter<SanphamAdapter.ItemHold
 
     public class ItemHolder extends RecyclerView.ViewHolder{
         public ImageView imghinhsanpham;
-        public TextView txttensanpham,txtgiasanpham;
+        public TextView txttensanpham,txtgiasanpham,txtgiagoc;
 
         public ItemHolder( View itemView) {
             super(itemView);
             imghinhsanpham = itemView.findViewById(R.id.imageviewsanpham);
             txtgiasanpham = itemView.findViewById(R.id.textviewgiasanpham);
             txttensanpham = itemView.findViewById(R.id.textviewtensanpham);
+            txtgiagoc=itemView.findViewById(R.id.textviewgiagocsanpham);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

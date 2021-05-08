@@ -53,7 +53,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     private ImageSlider imageSlider;
-    RecyclerView recyclerViewmanhinhchinh;
+    RecyclerView recyclerViewmanhinhchinh,recyclerView;
     NavigationView navigationView;
     ListView listViewmanhinhchinh;
     DrawerLayout drawerLayout;
@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
     int id;
     String tenloaisp = "";
     String hinhanhloaisp = "";
-    ArrayList<Sanpham> mangsanpham;
-    SanphamAdapter sanphamAdapter;
+    ArrayList<Sanpham> mangsanpham,mangsanphamgiamgia;
+    SanphamAdapter sanphamAdapter,sanphamgiamgiaAdapter;
     public static ArrayList<Giohang> manggiohang;
     private ArrayList<SlideModel> slideModelArrayList;
     SharedPreferences sharedPreferences;
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         //if(CheckConnection.haveNetworkConnection(getApplicationContext())){
             ActionBar();
             ActionViewFlipper();
+        GetDuLieuSPGiamGia();
             GetDuLieuLoaisp();
             GetDuLieuSPMoiNhat();
             CatchOnItemListView();
@@ -198,7 +199,47 @@ public class MainActivity extends AppCompatActivity {
         });
         requestQueue.add(jsonArrayRequest);
     }
+    private void GetDuLieuSPGiamGia() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.Duongdansanphamgiamgia, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if(response != null){
+                    int ID = 0;
+                    String Tensanpham = "";
+                    Integer Giasanpham = 0;
+                    String GiaGoc = "";
+                    String Hinhanhsanpham = "";
+                    String Motasanpham="";
+                    int IDsanpham = 0;
+                    for(int i=0;i<response.length();i++){
+                        try {
 
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            ID = jsonObject.getInt("id");
+                            Tensanpham = jsonObject.getString("tensp");
+                            Giasanpham = jsonObject.getInt("giasp");
+                            GiaGoc=jsonObject.getString("giagoc");
+                            Hinhanhsanpham = jsonObject.getString("hinhanhsp");
+                            Motasanpham = jsonObject.getString("motasp");
+                            IDsanpham = jsonObject.getInt("idsanpham");
+                            mangsanphamgiamgia.add(new Sanpham(ID,Tensanpham,Giasanpham,GiaGoc,Hinhanhsanpham,Motasanpham,IDsanpham));
+                            sanphamgiamgiaAdapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
+    }
     private void GetDuLieuLoaisp() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.Duongdanloaisp, new Response.Listener<JSONArray>() {
@@ -281,14 +322,19 @@ public class MainActivity extends AppCompatActivity {
         listViewmanhinhchinh = findViewById(R.id.listviewmanhinhchinh);
         drawerLayout = findViewById(R.id.drawerlayout);
         mangloaisp = new ArrayList<>();
-
+        recyclerView=findViewById(R.id.recycleview_giagoc);
         loaispAdapter = new LoaispAdapter(mangloaisp,getApplicationContext());
         listViewmanhinhchinh.setAdapter(loaispAdapter);
         mangsanpham = new ArrayList<>();
+        mangsanphamgiamgia=new ArrayList<>();
         sanphamAdapter = new SanphamAdapter(getApplicationContext(),mangsanpham);
+        sanphamgiamgiaAdapter=new SanphamAdapter(getApplicationContext(),mangsanphamgiamgia);
         recyclerViewmanhinhchinh.setHasFixedSize(true);
         recyclerViewmanhinhchinh.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         recyclerViewmanhinhchinh.setAdapter(sanphamAdapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        recyclerView.setAdapter(sanphamgiamgiaAdapter);
         if(manggiohang != null){
 
         }else {
