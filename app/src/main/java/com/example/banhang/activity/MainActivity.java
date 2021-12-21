@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                              e.printStackTrace();
                          }
                      }
-                        mangloaisp.add(new Loaisp(0,"Sản phẩm khác","https://www.flaticon.com/svg/vstatic/svg/3567/3567284.svg?token=exp=1620438104~hmac=6f24d373c475fde5e07d9ef8bcf2527b"));
+                        mangloaisp.add(new Loaisp(0,"Sản phẩm khác","https://cdn0.iconfinder.com/data/icons/round-ecommerce/130/.svg-8-512.png"));
                      mangloaisp.add(new Loaisp(0,"Liên Hệ","https:" +
                              "//cdn1.iconfinder.com/data/icons/mix-color-3/502/Untitled-12-512.png"));
                      mangloaisp.add(new Loaisp(0,"Thoát","https://cdn2.iconfinder.com/data/icons/UII_Icons/80x80/exit.png"));

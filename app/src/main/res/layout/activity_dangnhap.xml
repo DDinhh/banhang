@@ -143,9 +143,9 @@
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:id="@+id/buttondangki"
-                android:textColor="@color/black"
+                android:textColor="#2196F3"
                 android:textStyle="italic"
-                android:text="Bạn chưa có tài khoản ? Nhấn vào đây"
+                android:text="Bạn chưa có tài khoản ? Đăng ký"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>

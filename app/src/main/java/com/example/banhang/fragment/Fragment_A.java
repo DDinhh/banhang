@@ -103,6 +103,7 @@ public class Fragment_A extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    //[]
                     if (products.isEmpty()) {
                         textviewthongbao.setVisibility(View.VISIBLE);
                     } else {

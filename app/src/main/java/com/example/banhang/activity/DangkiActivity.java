@@ -57,7 +57,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class DangkiActivity extends AppCompatActivity {
+public class
+DangkiActivity extends AppCompatActivity {
     Toolbar toolbardt;
     EditText edittextusername, editextpassword;
     Button btnhuy, btnxacnhan;

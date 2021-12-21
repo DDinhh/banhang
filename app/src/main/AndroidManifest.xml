@@ -20,8 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BANHANG"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ChitietdonhangActivity"></activity>
-        <activity android:name=".activity.SanphamkhacActivity" />
+        <activity android:name=".activity.ChitietdonhangActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.SanphamkhacActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ThongtinActivity"
             android:screenOrientation="portrait" />

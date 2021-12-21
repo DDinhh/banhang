@@ -96,6 +96,7 @@ public class GiohangActivity extends AppCompatActivity {
         EditText editText=dialog.findViewById(R.id.e1);
         Button t1 = dialog.findViewById(R.id.buttonxacnhan);
         Button t2 = dialog.findViewById(R.id.buttonhuy);
+
         t1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +137,7 @@ public class GiohangActivity extends AppCompatActivity {
                                     @Override
                                     protected Map<String, String> getParams() throws AuthFailureError {
                                         JSONArray jsonArray = new JSONArray();
+
                                         for(int i=0;i<MainActivity.manggiohang.size();i++){
                                             JSONObject jsonObject= new JSONObject();
                                             try {

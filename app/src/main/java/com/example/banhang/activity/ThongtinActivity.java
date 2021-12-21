@@ -58,6 +58,7 @@ public class ThongtinActivity extends AppCompatActivity {
         tv_ten=findViewById(R.id.tv1);
         tv_dienthoai=findViewById(R.id.tv2);
         tv_diachi=findViewById(R.id.tv3);
+        //local: SQLite, SHare, ghi File
         sharedPreferences=getSharedPreferences(ManhinhchoActivity.SHARE_PREF,MODE_PRIVATE);
         editor=sharedPreferences.edit();
         tv_ten.setText(sharedPreferences.getString(ManhinhchoActivity.NAME,""));

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +41,7 @@ import java.util.Map;
 public class ChitietdonhangActivity extends AppCompatActivity {
     Toolbar toolbarChitiet;
     RecyclerView recyclerView;
-    TextView textView;
+    TextView textView,tv_oke;
     ArrayList<Chitietdonhang> arrayList=new ArrayList<>();
     ChitietdonhangAdapter adapter;
     @Override
@@ -53,27 +54,42 @@ public class ChitietdonhangActivity extends AppCompatActivity {
         if(getIntent().getIntExtra("trangthai",0)==0)
         {
             textView.setVisibility(View.VISIBLE);
+            tv_oke.setVisibility(View.VISIBLE);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showDialog();
+                    showDialogEx(2);
 
                 }
             });
+            tv_oke.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialogEx(1);
+                }
+            });
+
         }
 
     }
 
-    private void showDialog() {
+    private void showDialogEx(int number) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ChitietdonhangActivity.this);
         builder.setTitle("Thông báo");
-        builder.setMessage("Bạn có muốn hủy đơn hàng này không");
+        if(number==2) {
+            builder.setMessage("Bạn có muốn hủy đơn hàng này không");
+        }else{
+            builder.setMessage("Xác nhận  đã nhận đơn hàng này");
+        }
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                UpdateData(getIntent().getIntExtra("madonhang",0));
+                if(number==2) {
+                    UpdateData(getIntent().getIntExtra("madonhang", 0),Server.Duongdancapnhatdonhang);
+                }else{
+                    UpdateData(getIntent().getIntExtra("madonhang", 0),Server.Duongdancapnhatdonhangthanhcong);
+                }
                 dialog.dismiss();
                 finish();
             }
@@ -88,10 +104,12 @@ public class ChitietdonhangActivity extends AppCompatActivity {
     }
 
     private void Anhxa() {
+        tv_oke=findViewById(R.id.tv_oke);
         toolbarChitiet = findViewById(R.id.toolbar);
         recyclerView=findViewById(R.id.recycler_oder);
         textView=findViewById(R.id.tv_cancel);
         textView.setVisibility(View.GONE);
+        tv_oke.setVisibility(View.GONE);
         setSupportActionBar(toolbarChitiet);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbarChitiet.setNavigationOnClickListener(new View.OnClickListener() {
@@ -157,15 +175,20 @@ public class ChitietdonhangActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-    private void UpdateData(int id) {
+    private void UpdateData(int id, String duongdan) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        String duongdan = Server.Duongdancapnhatdonhang;
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, duongdan, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response .equals("1")){
-                    Toast.makeText(getApplicationContext(),"Đã hủy đơn hàng thành công",Toast.LENGTH_SHORT).show();
-                    finish();
+                    if(duongdan.equals(Server.Duongdancapnhatdonhang)) {
+                        Toast.makeText(getApplicationContext(), "Đã hủy đơn hàng thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Xác nhận đơn hàng thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }else {
                 }
             }

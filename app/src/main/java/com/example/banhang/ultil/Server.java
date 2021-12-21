@@ -18,6 +18,7 @@ public class Server {
     public static String Duongdansanphamkhac="http://"+localhost+"/getsanphamkhac.php";
     public static String Duongdanchitiet="http://"+localhost+"/getchitietdonhang.php";
     public static String Duongdancapnhatdonhang="http://"+localhost+"/updatedonhang.php";
+    public static String Duongdancapnhatdonhangthanhcong="http://"+localhost+"/updatedonhangthanhcong.php";
     public static String Duongdansanphamgiamgia="http://"+localhost+"/getsanphamgiamgia.php";
     //public static String localhost = "4ce32788116d.ngrok.io";
    // public static String Duongdanloaisp = "http://" + localhost + "/server/getloaisp.php";
